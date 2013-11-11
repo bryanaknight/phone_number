@@ -1,49 +1,44 @@
 class PhoneNumber
-  attr_reader :phone_number
+  attr_reader :digits
 
   def initialize(phone_number)
-    @phone_number = phone_number.gsub(/\D/, '')
+    @digits = phone_number.gsub(/\D/, '')
   end
 
   def number
     if valid_number_with_initial_one?
       remove_initial_one
-    elsif invalid?
+    elsif !valid_number?
       "0000000000"
     else
-      phone_number
+      digits
     end
   end
 
   def area_code
-    phone_number[0..2]
+    digits[0..2]
   end
 
   def to_s
     if valid_number_with_initial_one?
-      new_num = remove_initial_one
       format_phone_number(remove_initial_one)
     else
-      format_phone_number(phone_number)
+      format_phone_number(digits)
     end 
   end
 
   private
 
   def valid_number?
-    phone_number.length == 10 
+    digits.length == 10 
   end
 
   def remove_initial_one
-    phone_number[1..-1]
+    digits[1..-1]
   end
 
   def valid_number_with_initial_one?
-    phone_number.length == 11 && phone_number[0] == "1"
-  end
-
-  def invalid?
-    !valid_number? && !valid_number_with_initial_one?
+    digits.length == 11 && digits[0] == "1"
   end
 
   def format_phone_number(number)
@@ -51,3 +46,4 @@ class PhoneNumber
   end
 
 end
+
